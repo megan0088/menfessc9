@@ -4,6 +4,7 @@ export type Message = {
   untuk: string
   pesan: string
   likes: number
+  image_url: string | null
   created_at: string
 }
 

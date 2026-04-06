@@ -14,7 +14,7 @@ export async function GET() {
 
 export async function POST(req: NextRequest) {
   const body = await req.json()
-  const { dari, untuk, pesan } = body
+  const { dari, untuk, pesan, image_url } = body
 
   if (!dari?.trim() || !untuk?.trim() || !pesan?.trim()) {
     return NextResponse.json({ error: "Semua field wajib diisi" }, { status: 400 })
@@ -26,7 +26,7 @@ export async function POST(req: NextRequest) {
 
   const { data, error } = await supabase
     .from("messages")
-    .insert({ dari: dari.trim(), untuk: untuk.trim(), pesan: pesan.trim() })
+    .insert({ dari: dari.trim(), untuk: untuk.trim(), pesan: pesan.trim(), image_url: image_url ?? null })
     .select()
     .single()
 

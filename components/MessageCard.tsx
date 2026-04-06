@@ -82,6 +82,18 @@ export function MessageCard({ message }: { message: Message }) {
           </p>
         </div>
 
+        {/* Gambar */}
+        {message.image_url && (
+          <div className="mt-1 rounded-lg overflow-hidden border border-border/40">
+            <img
+              src={message.image_url}
+              alt="Lampiran"
+              className="w-full max-h-72 object-cover"
+            />
+          </div>
+        )}
+
+
       </CardContent>
 
       <CardFooter className="py-2.5 justify-between">
