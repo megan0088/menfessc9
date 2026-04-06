@@ -3,6 +3,7 @@ export type Message = {
   dari: string
   untuk: string
   pesan: string
+  likes: number
   created_at: string
 }
 
