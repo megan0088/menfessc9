@@ -69,7 +69,25 @@ export function MessageFeed() {
     fetch("/api/pesan")
       .then((r) => r.json())
       .then((data: Message[]) => {
-        setGroups(groupByDate(data))
+        // Pisahkan top-level dan replies
+        const replyMap: Record<string, Message[]> = {}
+        for (const msg of data) {
+          if (msg.parent_id) {
+            if (!replyMap[msg.parent_id]) replyMap[msg.parent_id] = []
+            replyMap[msg.parent_id].push(msg)
+          }
+        }
+        // Urutkan replies dari lama ke baru
+        for (const key of Object.keys(replyMap)) {
+          replyMap[key].sort((a, b) =>
+            new Date(a.created_at).getTime() - new Date(b.created_at).getTime()
+          )
+        }
+        const topLevel = data
+          .filter((m) => !m.parent_id)
+          .map((m) => ({ ...m, replies: replyMap[m.id] ?? [] }))
+
+        setGroups(groupByDate(topLevel))
         setLoading(false)
       })
   }, [])

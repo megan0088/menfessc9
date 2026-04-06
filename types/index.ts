@@ -5,7 +5,9 @@ export type Message = {
   pesan: string
   likes: number
   image_url: string | null
+  parent_id: string | null
   created_at: string
+  replies?: Message[]
 }
 
 export type MessagesByDate = {
